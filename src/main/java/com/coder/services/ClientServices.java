@@ -20,7 +20,7 @@ public class ClientServices {
 	
 	public Client creatClient(String name, int age, String email, String ine) {
 		Client client = new Client(name, age, email, ine);
-				return clientRepository.save(client);
+				return clientRepository.save( client);
 	}
 	
 	
