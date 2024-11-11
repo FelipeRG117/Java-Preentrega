@@ -15,11 +15,11 @@ public class Client {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private long id;
-@Column
+@Column(nullable = false)
 private String name;
 @Column
 private int age; 
-@Column(nullable = false)
+@Column(nullable = false, unique = true)
 
 private String email; 
 @Column(nullable= false)
@@ -74,6 +74,9 @@ public String getIne() {
 	return ine;
 }
 
+public void setIne(String ine) {
+	this.ine = ine;
+}
 
 
 
