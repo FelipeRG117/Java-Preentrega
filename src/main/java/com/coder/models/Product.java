@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name= "Products")
-public class Products {
+public class Product {
 //title, description price, brand
 	
 @Id
@@ -26,13 +26,12 @@ private String brand;
 @Column
 private  int stock;
 
-//contructors
-//contructor para spring
-public Products() {
+
+public Product() {
 	
 }
-//constructor de ejecucion 
-public Products(String title, String description, int price, String brand, int stock) {
+
+public Product(String title, String description, int price, String brand, int stock) {
 this.title = title;
 this.description = description;
 this.price = price;

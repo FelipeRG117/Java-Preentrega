@@ -14,7 +14,7 @@ public class Client {
 //firstName, lastName, age, email, doc, num 
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-private long id;
+private Long id;
 @Column(nullable = false)
 private String name;
 @Column
@@ -48,13 +48,16 @@ this.name = Name;
 
 }
 
+public void setAge(int age) {
+	this.age = age;
+}
 
 public int getAge() {
 	return age;
 }
 
 //getID
-public long getId() {
+public long getById() {
 	return id;
 }
 
