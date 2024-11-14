@@ -1,5 +1,6 @@
 package com.coder.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class ProductsServices {
 	@Autowired
 	public ProductsRepository productsRepository;
 	
-	public Product createProduct(String title, String description,int price, String brand, int stock) {
+	public Product createProduct(String title, String description,	BigDecimal price, String brand, int stock) {
 		Product product = new Product(title, description,price, brand, stock);
 		return productsRepository.save(product);
 	}

@@ -24,10 +24,8 @@ private int age;
 private String email; 
 @Column(nullable= false)
 private String ine;
-//Constructor vacio para Spring
-public Client() {
-	
-}
+
+
 //contructor para ejecucion
 public Client(String name, int age, String email, String ine) {
 	this.name = name;
@@ -57,7 +55,7 @@ public int getAge() {
 }
 
 //getID
-public long getById() {
+public Long getId() {
 	return id;
 }
 
