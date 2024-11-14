@@ -2,6 +2,8 @@ package com.coder.Controllers;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,13 +24,26 @@ public class SellController {
 		this.sellService= sellService;
 	}
 
+
 	@PostMapping("/create/{id}")
-	public TicketDTO createSell(@PathVariable Long id, @RequestBody List<TicketItemDTO>items) {
-		return sellService.createSell(id, items);
+	public ResponseEntity<TicketDTO> createSell(@PathVariable Long id, @RequestBody List<TicketItemDTO> items) {
+	    try {
+	        TicketDTO ticket = sellService.createSell(id, items);
+	        return ResponseEntity.ok(ticket);
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.badRequest().body(null);  // Error 400 si algún dato es incorrecto
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);  // Error 500 para cualquier otro error
+	    }
 	}
 
 	@GetMapping("/{id}")
-	public TicketDTO getSell(@PathVariable Long id) {
-		return sellService.getSell(id);
+	public ResponseEntity<TicketDTO> getSell(@PathVariable Long id) {
+	    try {
+	        TicketDTO ticket = sellService.getSell(id);
+	        return ResponseEntity.ok(ticket);
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.notFound().build();  // Error 404 si la venta no existe
+	    }
 	}
 }

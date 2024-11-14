@@ -4,6 +4,7 @@ package com.coder.models;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,6 +40,7 @@ public Sell(Client client, Date saleDate, List<SellItem>items) {
 	this.client = client;
 	this.saleDate = saleDate;
 	this.items = items;
+	 this.items.forEach(item -> item.setSell(this));
 	this.total = calculateTotal();
 }
 
@@ -74,7 +76,7 @@ public void setSaleDate(Date saleDate) {
 }
 
 public BigDecimal getTotal() {
-    return total;
+    return calculateTotal();
 }
 
 public void setTotal(BigDecimal total) {
@@ -86,8 +88,8 @@ public List<SellItem> getItems() {
 }
 
 public void setItems(List<SellItem> items) {
-    this.items = items;
-    this.total = calculateTotal();  
+	 this.items = (items != null) ? items : new ArrayList<>();
+	    this.total = calculateTotal();  
 }
 
 
