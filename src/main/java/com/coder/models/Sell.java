@@ -35,6 +35,9 @@ private BigDecimal total;
 @OneToMany(mappedBy = "sell", cascade = CascadeType.ALL)
 private List<SellItem> items;
 
+public Sell() {
+	
+}
 
 public Sell(Client client, Date saleDate, List<SellItem>items) {
 	this.client = client;

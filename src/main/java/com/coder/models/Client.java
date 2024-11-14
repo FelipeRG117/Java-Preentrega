@@ -25,7 +25,8 @@ private String email;
 @Column(nullable= false)
 private String ine;
 
-
+public Client() {
+}
 //contructor para ejecucion
 public Client(String name, int age, String email, String ine) {
 	this.name = name;

@@ -19,7 +19,7 @@ import com.coder.services.SellServices;
 @RequestMapping("/sells")
 public class SellController {
 
-	public final SellServices sellService;
+	public SellServices sellService;
 	public SellController(SellServices sellService) {
 		this.sellService= sellService;
 	}

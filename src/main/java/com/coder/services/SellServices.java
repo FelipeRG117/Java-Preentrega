@@ -34,23 +34,35 @@ public class SellServices {
 	}
 	
 	@Transactional
-	public TicketDTO createSell(Long id, List<TicketItemDTO>items) {
-		  
-        Client clientFound = clientRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado"));
+	public TicketDTO createSell(Long id, List<TicketItemDTO> items) {
+	    try {
+	        // Busca el cliente por ID
+	        Client clientFound = clientRepository.findById(id)
+	                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado"));
 
-        
-        List<SellItem> sellItems = items.stream().map(itemDto -> {
-            var product = productsRepository.findById(itemDto.getProductId())
-                    .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-            return new SellItem(null, product, itemDto.getQuantity());
-        }).collect(Collectors.toList());
+	        // Mapear los productos y crear SellItems
+	        List<SellItem> sellItems = items.stream().map(itemDto -> {
+	            var product = productsRepository.findById(itemDto.getProductId())
+	                    .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+	            return new SellItem(null, product, itemDto.getQuantity());
+	        }).collect(Collectors.toList());
 
-        Sell sell = new Sell(clientFound, new Date(System.currentTimeMillis()), sellItems);
-        sellRepository.save(sell);
+	        // Crear y guardar la venta
+	        Sell sell = new Sell(clientFound, new Date(System.currentTimeMillis()), sellItems);
+	        sellRepository.save(sell);
 
-        
-        return convertSellToDTO(sell);
+	        // Convertir a DTO
+	        return convertSellToDTO(sell);
+	    } catch (IllegalArgumentException e) {
+	        // Manejo específico de errores de entidad no encontrada
+	        System.err.println("Error: " + e.getMessage());
+	        throw e; // o retornar un mensaje de error específico
+	    } catch (Exception e) {
+	        // Manejo general de errores
+	        System.err.println("Error inesperado al crear la venta: " + e.getMessage());
+	        e.printStackTrace(); // Imprime el stacktrace para mayor detalle
+	        throw new RuntimeException("Ocurrió un error al crear la venta. Verifica los datos enviados.");
+	    }
 	}
 	
 	 public TicketDTO getSell(Long id) {

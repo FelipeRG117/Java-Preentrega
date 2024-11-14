@@ -28,6 +28,11 @@ private int quantity;
 private BigDecimal price; 
 private BigDecimal subtotal;
 
+public SellItem() {
+	
+}
+
+
 public SellItem(Sell sell, Product product, int quantity) {
 	this.sell = sell;
 	this.product = product;
