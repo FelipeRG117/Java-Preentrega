@@ -4,12 +4,23 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+@Schema (description = "DTO para creacion de facturas (Toma los datos de productos, los itera y forma la estructura del ticket")
 public class TicketDTO {
+@Schema (description = "id de ticket.")	
 private Long id;
+@Schema (description = "Nombre de cliente.")
 private String clientName;
+@Schema (description = "fecha del ticket.")
 private Date saleDate;
+@Schema (description = "Total de compra.")
 private BigDecimal totalAmount;
+@Schema (description = "Productos elegidos.")
 private List<TicketItemDTO> items;
+
+
 
 
 public Long getId() {

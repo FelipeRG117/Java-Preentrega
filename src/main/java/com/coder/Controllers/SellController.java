@@ -13,9 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coder.dto.TicketDTO;
 import com.coder.dto.TicketItemDTO;
+import com.coder.models.Product;
+import com.coder.models.Sell;
 import com.coder.services.SellServices;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name="Gestion de servicio de productos", description="Endpoints de servicio de productos")
 @RequestMapping("/sells")
 public class SellController {
 
@@ -24,7 +34,11 @@ public class SellController {
 		this.sellService= sellService;
 	}
 
-
+	@Operation(summary = "Crear un Ticket.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Ticket agregado correctamente", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Sell.class)) }),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content) })
 	@PostMapping("/create/{id}")
 	public ResponseEntity<TicketDTO> createSell(@PathVariable Long id, @RequestBody List<TicketItemDTO> items) {
 	    try {
@@ -37,6 +51,11 @@ public class SellController {
 	    }
 	}
 
+	@Operation(summary = "Obtener ticket por id.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "ticket encontrado correctamente", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = Sell.class)) }),
+            @ApiResponse(responseCode = "404", description = "ticket no encontrado", content = @Content) })
 	@GetMapping("/{id}")
 	public ResponseEntity<TicketDTO> getSell(@PathVariable Long id) {
 	    try {

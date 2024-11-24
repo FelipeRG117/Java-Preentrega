@@ -2,11 +2,19 @@ package com.coder.dto;
 
 import java.math.BigDecimal;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema (description = "DTO para creacion de facturas (Toma los datos del producto y sus detalles")
 public class TicketItemDTO {
+	@Schema (description = "id de producto.")
 	private Long productId;
+	@Schema (description = "nombre de producto.")
 	private String productName;
+	@Schema (description = "cantidad de producto.")
 	private int quantity;
+	@Schema (description = "precio de producto.")
 	private BigDecimal price;
+	@Schema (description = "total de producto/s.")
 	private BigDecimal subtotal;
 	
 

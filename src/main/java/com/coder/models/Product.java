@@ -2,6 +2,7 @@ package com.coder.models;
 
 import java.math.BigDecimal;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,22 +10,29 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+
 @Entity
+@Schema (description = "Modelo de product.")
 @Table(name= "Products")
 public class Product {
 //title, description price, brand
-	
+@Schema (description = "id product.")	
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
+@Schema (description = "title product.")
 @Column
 private String title;
+@Schema (description = "description product.")
 @Column
-private String description; 
+private String description;
+@Schema (description = "price product.")
 @Column(nullable = false)
 private BigDecimal price;
+@Schema (description = "brand product.")
 @Column(nullable= false)
 private String brand; 
+@Schema (description = "stock de product.")
 @Column
 private  int stock;
 
