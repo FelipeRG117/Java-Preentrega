@@ -14,7 +14,9 @@ private Long id;
 @Schema (description = "Nombre de cliente.")
 private String clientName;
 @Schema (description = "fecha del ticket.")
-private Date saleDate;
+private String saleDate;
+@Schema(description = "Hora del ticket.")
+private String saleTime;
 @Schema (description = "Total de compra.")
 private BigDecimal totalAmount;
 @Schema (description = "Productos elegidos.")
@@ -39,11 +41,11 @@ public void setClientName(String name) {
 	this.clientName = name;
 }
 
-public Date getSaleDate() {
+public String getSaleDate() {
 	return saleDate;
 }
 
-public void setSaleDate(Date newDate) {
+public void setSaleDate(String newDate) {
 	this.saleDate = newDate;
 }
 

@@ -34,7 +34,7 @@ public class SellServices {
 	}
 	
 	@Transactional
-	public TicketDTO createSell(Long id, List<TicketItemDTO> items) {
+	public TicketDTO createSell(Long id, List<TicketItemDTO> items, String dateTime) {
 	    try {
 	        // Busca el cliente por ID
 	        Client clientFound = clientRepository.findById(id)
@@ -47,10 +47,12 @@ public class SellServices {
 	            return new SellItem(null, product, itemDto.getQuantity());
 	        }).collect(Collectors.toList());
 
-	        // Crear y guardar la venta
-	        Sell sell = new Sell(clientFound, new Date(System.currentTimeMillis()), sellItems);
-	        sellRepository.save(sell);
+	        java.util.Date utilDate = java.util.Date.from(java.time.Instant.parse(dateTime));
+	        Date parsedDate = new java.sql.Date(utilDate.getTime());
 
+	        // Crear y guardar la venta
+	        Sell sell = new Sell(clientFound, parsedDate, sellItems);
+	        sellRepository.save(sell);
 	        // Convertir a DTO
 	        return convertSellToDTO(sell);
 	    } catch (IllegalArgumentException e) {
@@ -75,7 +77,8 @@ public class SellServices {
 	        TicketDTO ticketDTO = new TicketDTO();
 	        ticketDTO.setId(sell.getId());
 	        ticketDTO.setClientName(sell.getClient().getName());
-	        ticketDTO.setSaleDate(sell.getSaleDate());
+	        String formattedDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sell.getSaleDate());
+	        ticketDTO.setSaleDate(formattedDate);
 	        ticketDTO.setTotalAmount(sell.getTotal());
 	        ticketDTO.setItems(sell.getItems().stream().map(this::convertSellItemToDTO).collect(Collectors.toList()));
 	        return ticketDTO;

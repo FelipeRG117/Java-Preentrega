@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.coder.dto.TimeResponseDTO;
 import com.coder.models.Product;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,16 +31,16 @@ public class ApiControllers {
 	@Operation(summary = "Obtener datos de API.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de API obtenida correctamente", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)) }),
+            @Content(mediaType = "application/json", schema = @Schema(implementation = TimeResponseDTO.class)) }),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
     })
 	@GetMapping
-    public ResponseEntity<String> getAllClients(){
+    public ResponseEntity<TimeResponseDTO> getAllClients(){
         try {
         	final String URL = "https://timeapi.io/api/Time/current/zone?timeZone=America/Argentina/Buenos_Aires";
            // System.out.println("En servicio API TIME" + restTemplate.getForObject(URL,String.class));
            // System.out.println("En servicio API TIME pero mapeado" + restTemplate.getForObject(URL,TimeHourResponseDTO.class));
-            String response = restTemplate.getForObject(URL, String.class);
+            TimeResponseDTO response = restTemplate.getForObject(URL, TimeResponseDTO.class);
             return ResponseEntity.ok(response);
         }catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coder.dto.TicketDTO;
 import com.coder.dto.TicketItemDTO;
+import com.coder.dto.TicketRequestDTO;
 import com.coder.models.Product;
 import com.coder.models.Sell;
 import com.coder.services.SellServices;
@@ -40,9 +41,9 @@ public class SellController {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Sell.class)) }),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content) })
 	@PostMapping("/create/{id}")
-	public ResponseEntity<TicketDTO> createSell(@PathVariable Long id, @RequestBody List<TicketItemDTO> items) {
+	public ResponseEntity<TicketDTO> createSell(@PathVariable Long id, @RequestBody TicketRequestDTO request) {
 	    try {
-	        TicketDTO ticket = sellService.createSell(id, items);
+	        TicketDTO ticket = sellService.createSell(id, request.getItems(), request.getDateTime());
 	        return ResponseEntity.ok(ticket);
 	    } catch (IllegalArgumentException e) {
 	        return ResponseEntity.badRequest().body(null);  // Error 400 si algún dato es incorrecto
